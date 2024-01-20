@@ -1,23 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import { AuthProvider } from "./common/context/AuthContext";
+import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import "./App.css";
+import { ThemeProvider, createTheme } from "@mui/material";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
+import Bags from "./pages/Bags";
+import Clothes from "./pages/Clothes";
+import Ring from "./pages/Ring";
+import Shoes from "./pages/Shoes";
+import Watch from "./pages/Watch";
+import { DbProvider } from "./common/context/DbContext";
+import MarketPlace from "./pages/MarketPlace";
+
+const theme = createTheme({
+  typography: {
+    color: "white",
+  },
+});
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeProvider theme={theme}>
+        <AuthProvider>
+          <DbProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/bags" element={<Bags />} />
+                <Route path="/clothes" element={<Clothes />} />
+                <Route path="/ring" element={<Ring />} />
+                <Route path="/shoes" element={<Shoes />} />
+                <Route path="/watch" element={<Watch />} />
+                <Route path="/marketplace" element={<MarketPlace />} />
+
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+              </Routes>
+            </BrowserRouter>
+          </DbProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </div>
   );
 }
