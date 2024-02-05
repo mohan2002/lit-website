@@ -6,6 +6,7 @@ import {
   Container,
   Card,
   CardMedia,
+  Link,
 } from "@mui/material";
 import Navbar from "../common/components/Navbar";
 import Watch from "../common/assets/watch.jpg";
@@ -18,6 +19,7 @@ import { useAuth } from "../common/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useDb } from "../common/context/DbContext";
 import { ScaleLoader } from "react-spinners";
+import ParticleComponent from "../common/components/ParticleComponent";
 
 const Home = () => {
   const { userId, isAuthenticated } = useAuth();
@@ -77,18 +79,18 @@ const Home = () => {
 
   console.log(loading);
 
-  if (loading) {
-    return (
-      <Box
-        height="100vh"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <ScaleLoader color="white" width={6} height={42} />
-      </Box>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Box
+  //       height="100vh"
+  //       display="flex"
+  //       alignItems="center"
+  //       justifyContent="center"
+  //     >
+  //       <ScaleLoader color="white" width={6} height={42} />
+  //     </Box>
+  //   );
+  // }
 
   return (
     <Box
@@ -99,6 +101,7 @@ const Home = () => {
       }}
     >
       <Navbar />
+      <ParticleComponent />
 
       <Box
         sx={{

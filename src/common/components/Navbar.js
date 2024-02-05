@@ -37,7 +37,7 @@ const Navbar = () => {
     <AppBar
       position="static"
       sx={{
-        background: "transparent",
+        background: "#FF6BFF",
         height: 80,
         display: "flex",
         alignItems: "center",
@@ -69,7 +69,7 @@ const Navbar = () => {
           <img
             src={Logo}
             alt="Logo"
-            style={{ height: "60px", marginRight: "10px" }}
+            style={{ height: "80px", marginRight: "10px" }}
           />
         </Box>
         <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
