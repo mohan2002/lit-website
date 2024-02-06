@@ -1,84 +1,70 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Navbar from "../common/components/Navbar";
 import {
   Box,
-  Typography,
-  Grid,
-  Container,
   Card,
   CardMedia,
-  Link,
-  CardContent,
+  Container,
+  Grid,
+  Typography,
 } from "@mui/material";
-import Navbar from "../common/components/Navbar";
-import Watch from "../common/assets/watch.jpg";
-import Bags from "../common/assets/bags.png";
-import Clothes from "../common/assets/clothes.png";
-import Ring from "../common/assets/ring.jpg";
-import Shoes from "../common/assets/shoes.png";
-import MarketPlace from "../common/assets/glasses.png";
-import { useAuth } from "../common/context/AuthContext";
+import ParticleComponent from "../common/components/ParticleComponent";
+import Play from "../common/assets/play.png";
+import Socials from "../common/assets/socialspace.png";
+import Ir from "../common/assets/ir.png";
+import Avatar from "../common/assets/avatar.png";
+import Lit from "../common/assets/litstore.png";
 import { useNavigate } from "react-router-dom";
 import { useDb } from "../common/context/DbContext";
 import { ScaleLoader } from "react-spinners";
-import ParticleComponent from "../common/components/ParticleComponent";
 
-const Home = () => {
-  const { userId, isAuthenticated } = useAuth();
-  // const { loading, gameData } = useDb();
+function MainHome() {
   const navigate = useNavigate();
+  const { loading } = useDb();
 
   const imageLinks = [
-    // {
-    //   id: 1,
-    //   image: Watch,
-    //   link: "/watch",
-    //   title: "Watch",
-    //   quote: "Time is an illusion.",
-    // },
     {
       id: 2,
-      image: Bags,
-      link: "/bags",
-      title: "Bags",
+      image: Socials,
+      link: "/",
+      title: "Social Space",
       quote: "Fashion is a trend. Style lives within a person.",
     },
     {
       id: 3,
-      image: Clothes,
-      link: "/clothes",
-      title: "Clothes",
+      image: Ir,
+      link: "/",
+      title: "IR ICON",
       quote: "Dress like you’re already famous.",
     },
-    // {
-    //   id: 4,
-    //   image: Ring,
-    //   link: "/ring",
-    //   title: "Ring",
-    //   quote: "A ring is a halo on your finger.",
-    // },
     {
       id: 5,
-      image: Shoes,
-      link: "/shoes",
-      title: "Shoes",
+      image: Avatar,
+      link: "/",
+      title: "Avatar store",
       quote: "Give a girl the right shoes, and she can conquer the world.",
     },
     {
       id: 6,
-      image: MarketPlace,
+      image: Lit,
       link: "/marketplace",
-      title: "Accessories",
+      title: "Lit Store",
       quote: "Discover unique treasures in the marketplace.",
     },
   ];
 
-  const { gameDataFetch } = useDb();
-
-  useEffect(() => {
-    gameDataFetch();
-  }, []);
-
-  // console.log(loading);
+  if (loading) {
+    return (
+      <Box
+        height="100vh"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <ScaleLoader color="white" width={6} height={42} />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -107,9 +93,16 @@ const Home = () => {
             flexDirection: "column",
           }}
         >
-          <Typography mb={4} variant="h5" fontWeight={700}>
-            CATEGORIES!
-          </Typography>
+          <Box
+            onClick={() => {
+              navigate("/home");
+            }}
+            sx={{ marginTop: "-50px" }}
+            mb={6}
+          >
+            <img src={Play} style={{ height: "200px", cursor: "pointer" }} />
+          </Box>
+
           <Grid container spacing={4}>
             {imageLinks.map((item) => (
               <Grid
@@ -123,7 +116,14 @@ const Home = () => {
                   flexDirection: "column",
                 }}
               >
-                <Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
                   <Card
                     elevation={3}
                     sx={{
@@ -135,13 +135,6 @@ const Home = () => {
                       "&:hover": {
                         transform: "scale(1.05)",
                       },
-                    }}
-                    onClick={() => {
-                      if (isAuthenticated) {
-                        navigate(item.link);
-                      } else {
-                        navigate("/login");
-                      }
                     }}
                   >
                     <CardMedia
@@ -155,7 +148,7 @@ const Home = () => {
                   <Typography
                     textAlign="center"
                     fontWeight="600"
-                    mt={2}
+                    mt={1}
                     sx={{ textTransform: "uppercase" }}
                   >
                     {item.title}
@@ -168,6 +161,6 @@ const Home = () => {
       </Box>
     </Box>
   );
-};
+}
 
-export default Home;
+export default MainHome;

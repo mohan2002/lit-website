@@ -33,6 +33,19 @@ function Game({ gameData, from }) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
       }
+
+      // Ensure "low" and "high" options do not appear consecutively
+      for (let i = 0; i < shuffled.length - 1; i++) {
+        if (shuffled[i].choice === "low" && shuffled[i + 1].choice === "high") {
+          [shuffled[i], shuffled[i + 1]] = [shuffled[i + 1], shuffled[i]];
+        } else if (
+          shuffled[i].choice === "high" &&
+          shuffled[i + 1].choice === "low"
+        ) {
+          [shuffled[i], shuffled[i + 1]] = [shuffled[i + 1], shuffled[i]];
+        }
+      }
+
       return shuffled;
     };
 
@@ -152,6 +165,9 @@ function Game({ gameData, from }) {
   const renderImages = () => {
     if (currentIndex < shuffledData.length) {
       const currentData = shuffledData[currentIndex];
+      // Randomly determine the position of "low" and "high" options
+      const isLowLeft = Math.random() < 0.5;
+
       return (
         <Box
           display="flex"
@@ -163,43 +179,102 @@ function Game({ gameData, from }) {
             variant="h4"
             fontWeight={700}
             mb={6}
-            sx={{ textDecoration: "underline" }}
+            sx={{ textTransform: "uppercase" }}
           >
-            Choose which one is costlier?
+            Choose the Expensive option
           </Typography>
           <Box display="flex" flexDirection="row" alignItems="center" gap={4}>
-            <Card
-              sx={{ width: 300, height: 400 }}
-              onClick={() => handleImageClick("low")}
-            >
-              <CardMedia
-                component="img"
-                height="100%"
-                image={currentData.low}
-                alt="Low"
-                sx={{ objectFit: "contain" }}
-              />
-            </Card>
-            <Box
-              height={400}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <CompareArrowsIcon sx={{ fontSize: "52px" }} />
-            </Box>
-            <Card
-              sx={{ width: 300, height: 400, cursor: "pointer" }}
-              onClick={() => handleImageClick("high")}
-            >
-              <CardMedia
-                component="img"
-                height="100%"
-                image={currentData.high}
-                alt="High"
-                sx={{ objectFit: "contain" }}
-              />
-            </Card>
+            {isLowLeft ? (
+              <>
+                <Card
+                  sx={{
+                    width: 300,
+                    height: 400,
+                    cursor: "pointer",
+                    backgroundColor: "transparent",
+                  }}
+                  onClick={() => handleImageClick("low")}
+                >
+                  <CardMedia
+                    component="img"
+                    height="100%"
+                    image={currentData.low}
+                    alt="Low"
+                    sx={{ objectFit: "contain" }}
+                  />
+                </Card>
+                <Box
+                  height={400}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <CompareArrowsIcon sx={{ fontSize: "52px" }} />
+                </Box>
+                <Card
+                  sx={{
+                    width: 300,
+                    height: 400,
+                    cursor: "pointer",
+                    backgroundColor: "transparent",
+                  }}
+                  onClick={() => handleImageClick("high")}
+                >
+                  <CardMedia
+                    component="img"
+                    height="100%"
+                    image={currentData.high}
+                    alt="High"
+                    sx={{ objectFit: "contain" }}
+                  />
+                </Card>
+              </>
+            ) : (
+              <>
+                <Card
+                  sx={{
+                    width: 300,
+                    height: 400,
+                    cursor: "pointer",
+                    backgroundColor: "transparent",
+                  }}
+                  onClick={() => handleImageClick("high")}
+                >
+                  <CardMedia
+                    component="img"
+                    height="100%"
+                    image={currentData.high}
+                    alt="High"
+                    sx={{ objectFit: "contain" }}
+                  />
+                </Card>
+                <Box
+                  height={400}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <CompareArrowsIcon sx={{ fontSize: "52px" }} />
+                </Box>
+                <Card
+                  sx={{
+                    width: 300,
+                    height: 400,
+                    cursor: "pointer",
+                    backgroundColor: "transparent",
+                  }}
+                  onClick={() => handleImageClick("low")}
+                >
+                  <CardMedia
+                    component="img"
+                    height="100%"
+                    image={currentData.low}
+                    alt="Low"
+                    sx={{ objectFit: "contain" }}
+                  />
+                </Card>
+              </>
+            )}
           </Box>
           <Button
             variant="outlined"

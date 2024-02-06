@@ -11,55 +11,47 @@ const DbProvider = ({ children }) => {
   const gameDataFetch = async () => {
     let imageData = {
       bags: [],
-      chain: [],
       shoes: [],
-      watches: [],
       clothes: [],
-      glass: [],
-      ring: [],
+      accessories: [],
     };
 
     setLoading(true);
-    // bags
-    let querySnapshot = await getDocs(collection(db, "bags"));
 
+    let querySnapshot = await getDocs(collection(db, "bags"));
     querySnapshot.forEach((doc) => {
       imageData.bags.push(doc.data());
     });
 
-    querySnapshot = await getDocs(collection(db, "watchImages"));
-
-    querySnapshot.forEach((doc) => {
-      imageData.watches.push(doc.data());
-    });
-
-    querySnapshot = await getDocs(collection(db, "chainImages"));
-
-    querySnapshot.forEach((doc) => {
-      imageData.chain.push(doc.data());
-    });
-
-    querySnapshot = await getDocs(collection(db, "clothesImages"));
-
-    querySnapshot.forEach((doc) => {
-      imageData.clothes.push(doc.data());
-    });
-
-    querySnapshot = await getDocs(collection(db, "glassImages"));
-
-    querySnapshot.forEach((doc) => {
-      imageData.glass.push(doc.data());
-    });
-
     querySnapshot = await getDocs(collection(db, "shoesImages"));
-
     querySnapshot.forEach((doc) => {
       imageData.shoes.push(doc.data());
     });
 
+    querySnapshot = await getDocs(collection(db, "clothesImages"));
+    querySnapshot.forEach((doc) => {
+      imageData.clothes.push(doc.data());
+    });
+
+    // Fetch accessories data
+    querySnapshot = await getDocs(collection(db, "glassImages"));
+    querySnapshot.forEach((doc) => {
+      imageData.accessories.push(doc.data());
+    });
+
     querySnapshot = await getDocs(collection(db, "ringImages"));
     querySnapshot.forEach((doc) => {
-      imageData.ring.push(doc.data());
+      imageData.accessories.push(doc.data());
+    });
+
+    querySnapshot = await getDocs(collection(db, "watchImages"));
+    querySnapshot.forEach((doc) => {
+      imageData.accessories.push(doc.data());
+    });
+
+    querySnapshot = await getDocs(collection(db, "chainImages"));
+    querySnapshot.forEach((doc) => {
+      imageData.accessories.push(doc.data());
     });
 
     setGameData(imageData);

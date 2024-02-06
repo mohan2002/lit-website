@@ -16,6 +16,7 @@ import Shoes from "./pages/Shoes";
 import Watch from "./pages/Watch";
 import { DbProvider } from "./common/context/DbContext";
 import MarketPlace from "./pages/MarketPlace";
+import MainHome from "./pages/MainHome";
 
 const theme = createTheme({
   typography: {
@@ -31,7 +32,8 @@ function App() {
           <DbProvider>
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<MainHome />} />
+                <Route path="/home" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/faq" element={<FAQ />} />

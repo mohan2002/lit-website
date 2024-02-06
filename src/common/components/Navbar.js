@@ -73,7 +73,9 @@ const Navbar = () => {
           />
         </Box>
         <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-          <Typography variant="h6">Welcome Mohan 👋🏻</Typography>
+          <Typography variant="h5" fontWeight={600}>
+            Welcome 👋🏻
+          </Typography>
         </Box>
         {isAuthenticated ? (
           <Box ml={4}>
